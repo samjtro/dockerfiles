@@ -1,12 +1,9 @@
 version: "3.8"
 services:
   arch:
-    image: archlinux:latest
-    command: bash -c "pacman --noconfirm -Syy && 
-      pacman --noconfirm -Syu && 
-      pacman --noconfirm -S git vim sudo curl gnupg wget python python-pip go jdk-openjdk jre-openjdk && 
-      locale-gen en_US.UTF8"
+    build: .
     volumes:
       - type: bind
         source: $HOME/workspace
         target: /workspace
+    tty: true
