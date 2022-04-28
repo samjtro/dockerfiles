@@ -1,4 +1,9 @@
 version: "3.8"
 services:
   parrot:
-    image: parrotsec/security
+    build: .
+    volumes:
+      - type: bind
+        source: $HOME/docker/files/parrot
+        target: /link
+    tty: true

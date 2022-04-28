@@ -5,5 +5,5 @@ services:
     volumes:
       - type: bind
         source: $HOME/workspace
-        target: /workspace
+        target: /home/workspace
     tty: true
