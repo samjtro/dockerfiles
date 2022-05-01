@@ -4,6 +4,6 @@ services:
     build: .
     volumes:
       - type: bind
-        source: $HOME/workspace
+        source: /home/sam/workspace
         target: /home/workspace
     tty: true
