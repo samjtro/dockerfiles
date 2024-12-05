@@ -1,28 +1,14 @@
 # BUILD
-
 FROM golang:alpine as builder
-RUN mkdir /app
 WORKDIR /app
-
-RUN --mount=type=cache,target=/go/pkg/mod/ \
-    --mount=type=bind,source=go.sum,target=go.sum \
-    --mount=type=bind,source=go.mod,target=go.mod \
-    go mod download -x
-
-ENV GOCACHE=/root/.cache/go-build
-
-RUN --mount=type=cache,target=/go/pkg/mod/ \
-    --mount=type=cache,target="/root/.cache/go-build" \
-    --mount=type=bind,target=. \
-    go build -o app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app/app
 
 # RUN
-
 FROM scratch
-RUN mkdir /app
 WORKDIR /app
 COPY --from=builder /app/app .
-
-# EXPOSE 8080
-
+EXPOSE 8080
 CMD ["./app/app"]
